@@ -1,0 +1,5 @@
+.qodo
+alt_fitness*.csv
+__pycache__/
+x*.*
+controllers/drive_robot/fitness-log.csv

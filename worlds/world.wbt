@@ -1,0 +1,521 @@
+#VRML_SIM R2025a utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/floors/protos/RectangleArena.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/Parquetry.proto"
+
+WorldInfo {
+}
+Viewpoint {
+  orientation -0.12774448948084205 0.20964166936716588 0.9693976046350781 1.1223655314731105
+  position -0.5443848246479901 -1.1598732808805357 0.47487520679286505
+  exposure 2
+  follow "quadcopter"
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+DEF Rectarena RectangleArena {
+  floorSize 1000 1000
+  floorTileSize 1 1
+  floorAppearance Parquetry {
+    type "light strip"
+  }
+  wallHeight 1
+}
+DEF QUADCOPTER Robot {
+  translation 0.00015369769523986563 0.00015369700014465664 -0.05009408952242112
+  rotation -5.152821339299504e-05 -5.152811161545531e-05 0.9999999973448485 3.141590713497594
+  children [
+    GPS {
+    }
+    InertialUnit {
+      rotation 0 0 1 3.14159
+      name "imu"
+    }
+    Gyro {
+    }
+    Compass {
+    }
+    DEF BODY Pose {
+      translation 0 0 0.1
+      children [
+        Shape {
+          appearance DEF MAIN_COLOR PBRAppearance {
+            baseColor 0.941176 0.027451 0.027451
+            roughness 1.1102230246251565e-16
+            metalness 0
+          }
+          geometry Box {
+            size 0.3 0.3 0.1
+          }
+        }
+      ]
+    }
+    DEF FR_ARM Pose {
+      translation 0.15 -0.15 0.1
+      children [
+        Shape {
+          appearance DEF BLACK_METAL PBRAppearance {
+            baseColor 0 0 0
+            roughness 1.1102230246251565e-16
+            metalness 0
+          }
+          geometry Cylinder {
+            height 0.1
+            radius 0.01
+            subdivision 24
+          }
+        }
+      ]
+    }
+    DEF FR_PROPELLER Propeller {
+      shaftAxis 0 0 1
+      centerOfThrust 0.15 -0.15 0.15
+      thrustConstants -0.00026 0
+      torqueConstants 0.0000052 0
+      device RotationalMotor {
+        name "fr_motor"
+        acceleration 50
+        maxVelocity 400
+        maxTorque 15
+      }
+      fastHelix Solid {
+        translation 0.15 -0.15 0.16
+        children [
+          Shape {
+            appearance PBRAppearance {
+              baseColorMap ImageTexture {
+                url [
+                  "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/samples/devices/worlds/textures/blurred_helix.png"
+                ]
+              }
+              transparency 0.5
+              roughness 0.5
+              metalness 0
+            }
+            geometry Cylinder {
+              height 0.003
+              radius 0.08
+              side FALSE
+              subdivision 24
+            }
+          }
+        ]
+      }
+      slowHelix Solid {
+        translation 0.15 -0.15 0.16
+        rotation -1 0 0 -1.570796
+        children [
+          Pose {
+            rotation 0 0 1 1.570796
+            children [
+              Group {
+                children [
+                  Shape {
+                    appearance USE BLACK_METAL
+                    geometry Capsule {
+                      height 0.02
+                      radius 0.01
+                    }
+                  }
+                  DEF RIGHT_BLADE Pose {
+                    translation 0 0 0.06
+                    rotation 0 0 1 -0.361801
+                    children [
+                      Shape {
+                        appearance PBRAppearance {
+                          baseColor 0.8 0.8 0.8
+                          roughness 1
+                          metalness 0
+                        }
+                        geometry Box {
+                          size 0.01 0.004 0.08
+                        }
+                      }
+                    ]
+                  }
+                  DEF LEFT_BLADE Pose {
+                    translation 0 0 -0.06
+                    rotation 0 0 1 0.361799
+                    children [
+                      Shape {
+                        appearance PBRAppearance {
+                          baseColor 0.8 0.8 0.8
+                          roughness 1
+                          metalness 0
+                        }
+                        geometry Box {
+                          size 0.01 0.004 0.08
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+    DEF FL_ARM Pose {
+      translation 0.15 0.15 0.1
+      children [
+        Shape {
+          appearance USE BLACK_METAL
+          geometry Cylinder {
+            height 0.1
+            radius 0.01
+            subdivision 24
+          }
+        }
+      ]
+    }
+    DEF FL_PROPELLER Propeller {
+      shaftAxis 0 0 1
+      centerOfThrust 0.15 0.15 0.15
+      thrustConstants 0.00026 0
+      torqueConstants 0.0000052 0
+      device RotationalMotor {
+        name "fl_motor"
+        acceleration 50
+        maxVelocity 400
+        maxTorque 15
+      }
+      fastHelix Solid {
+        translation 0.15 0.15 0.16
+        children [
+          Shape {
+            appearance PBRAppearance {
+              baseColorMap ImageTexture {
+                url [
+                  "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/samples/devices/worlds/textures/blurred_helix.png"
+                ]
+              }
+              transparency 0.5
+              roughness 0.5
+              metalness 0
+            }
+            geometry Cylinder {
+              height 0.003
+              radius 0.08
+              side FALSE
+              subdivision 24
+            }
+          }
+        ]
+      }
+      slowHelix Solid {
+        translation 0.15 0.15 0.16
+        rotation -1 0 0 -1.570796
+        children [
+          Pose {
+            rotation 0 0 1 1.570796
+            children [
+              Group {
+                children [
+                  Shape {
+                    appearance USE BLACK_METAL
+                    geometry Capsule {
+                      height 0.02
+                      radius 0.01
+                    }
+                  }
+                  DEF RIGHT_BLADE Pose {
+                    translation 0 0 0.06
+                    rotation 0 0 1 0.361801
+                    children [
+                      Shape {
+                        appearance PBRAppearance {
+                          baseColor 0.8 0.8 0.8
+                          roughness 1
+                          metalness 0
+                        }
+                        geometry Box {
+                          size 0.01 0.004 0.08
+                        }
+                      }
+                    ]
+                  }
+                  DEF LEFT_BLADE Pose {
+                    translation 0 0 -0.06
+                    rotation 0 0 1 -0.361799
+                    children [
+                      Shape {
+                        appearance PBRAppearance {
+                          baseColor 0.8 0.8 0.8
+                          roughness 1
+                          metalness 0
+                        }
+                        geometry Box {
+                          size 0.01 0.004 0.08
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+    DEF BL_ARM Pose {
+      translation -0.15 0.15 0.1
+      children [
+        Shape {
+          appearance USE BLACK_METAL
+          geometry Cylinder {
+            height 0.1
+            radius 0.01
+            subdivision 24
+          }
+        }
+      ]
+    }
+    DEF BL_PROPELLER Propeller {
+      shaftAxis 0 0 1
+      centerOfThrust -0.15 0.15 0.15
+      thrustConstants -0.00026 0
+      torqueConstants 0.0000052 0
+      device RotationalMotor {
+        name "bl_motor"
+        acceleration 50
+        maxVelocity 400
+        maxTorque 15
+      }
+      fastHelix Solid {
+        translation -0.15 0.15 0.16
+        children [
+          Shape {
+            appearance PBRAppearance {
+              baseColorMap ImageTexture {
+                url [
+                  "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/samples/devices/worlds/textures/blurred_helix.png"
+                ]
+              }
+              transparency 0.5
+              roughness 0.5
+              metalness 0
+            }
+            geometry Cylinder {
+              height 0.003
+              radius 0.08
+              side FALSE
+              subdivision 24
+            }
+          }
+        ]
+      }
+      slowHelix Solid {
+        translation -0.15 0.15 0.16
+        rotation -1 0 0 -1.570796
+        children [
+          Pose {
+            rotation 0 0 1 1.570796
+            children [
+              Group {
+                children [
+                  Shape {
+                    appearance USE BLACK_METAL
+                    geometry Capsule {
+                      height 0.02
+                      radius 0.01
+                    }
+                  }
+                  DEF RIGHT_BLADE Pose {
+                    translation 0 0 0.06
+                    rotation 0 0 1 -0.361801
+                    children [
+                      Shape {
+                        appearance PBRAppearance {
+                          baseColor 0.8 0.8 0.8
+                          roughness 1
+                          metalness 0
+                        }
+                        geometry Box {
+                          size 0.01 0.004 0.08
+                        }
+                      }
+                    ]
+                  }
+                  DEF LEFT_BLADE Pose {
+                    translation 0 0 -0.06
+                    rotation 0 0 1 0.361799
+                    children [
+                      Shape {
+                        appearance PBRAppearance {
+                          baseColor 0.8 0.8 0.8
+                          roughness 1
+                          metalness 0
+                        }
+                        geometry Box {
+                          size 0.01 0.004 0.08
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+    DEF BR_ARM Pose {
+      translation -0.15 -0.15 0.1
+      children [
+        Shape {
+          appearance USE BLACK_METAL
+          geometry Cylinder {
+            height 0.1
+            radius 0.01
+            subdivision 24
+          }
+        }
+      ]
+    }
+    DEF BR_PROPELLER Propeller {
+      shaftAxis 0 0 1
+      centerOfThrust -0.15 -0.15 0.15
+      thrustConstants 0.00026 0
+      torqueConstants 0.0000052 0
+      device RotationalMotor {
+        name "br_motor"
+        acceleration 50
+        maxVelocity 400
+        maxTorque 15
+      }
+      fastHelix Solid {
+        translation -0.15 -0.15 0.16
+        children [
+          Shape {
+            appearance PBRAppearance {
+              baseColorMap ImageTexture {
+                url [
+                  "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/samples/devices/worlds/textures/blurred_helix.png"
+                ]
+              }
+              transparency 0.5
+              roughness 0.5
+              metalness 0
+            }
+            geometry Cylinder {
+              height 0.003
+              radius 0.08
+              side FALSE
+              subdivision 24
+            }
+          }
+        ]
+      }
+      slowHelix Solid {
+        translation -0.15 -0.15 0.16
+        rotation -1 0 0 -1.570796
+        children [
+          Pose {
+            rotation 0 0 1 1.570796
+            children [
+              Group {
+                children [
+                  Shape {
+                    appearance USE BLACK_METAL
+                    geometry Capsule {
+                      height 0.02
+                      radius 0.01
+                    }
+                  }
+                  DEF RIGHT_BLADE Pose {
+                    translation 0 0 0.06
+                    rotation 0 0 1 0.361801
+                    children [
+                      Shape {
+                        appearance PBRAppearance {
+                          baseColor 0.8 0.8 0.8
+                          roughness 1
+                          metalness 0
+                        }
+                        geometry Box {
+                          size 0.01 0.004 0.08
+                        }
+                      }
+                    ]
+                  }
+                  DEF LEFT_BLADE Pose {
+                    translation 0 0 -0.06
+                    rotation 0 0 1 -0.361799
+                    children [
+                      Shape {
+                        appearance PBRAppearance {
+                          baseColor 0.8 0.8 0.8
+                          roughness 1
+                          metalness 0
+                        }
+                        geometry Box {
+                          size 0.01 0.004 0.08
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+    Pose {
+      translation 0.15 0.075 0.1
+      children [
+        DEF eye Shape {
+          appearance PBRAppearance {
+            baseColor 0 0.5 0
+            roughness 1
+          }
+          geometry Box {
+            size 0.02 0.02 0.02
+          }
+        }
+      ]
+    }
+    Pose {
+      translation 0.15 -0.075 0.1
+      children [
+        USE eye
+      ]
+    }
+  ]
+  name "quadcopter"
+  boundingObject Group {
+    children [
+      USE BODY
+      USE FR_ARM
+      USE FL_ARM
+      USE BL_ARM
+      USE BR_ARM
+    ]
+  }
+  physics Physics {
+    density -1
+    mass 1
+    damping Damping {
+    }
+  }
+  controller "drive_robot"
+  supervisor TRUE
+}
+Solid {
+  translation 10 10 0
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 0 1 0
+      }
+      geometry Box {
+        size 2 2 0.05
+      }
+    }
+  ]
+}
