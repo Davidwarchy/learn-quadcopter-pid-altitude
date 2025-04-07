@@ -4,7 +4,9 @@ This setup initializes a drone with motor and sensor control, including GPS and 
 
 The program uses a basic genetic algorithm to get PID parameters for altitude control
 
+Rewards are evaluated as the inverse of the error over time. 
 
+![alt text](media/image.png)
 
 ## Requirements
 
